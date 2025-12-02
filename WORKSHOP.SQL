@@ -1,135 +1,190 @@
-CREATE TABLE Produit(
-    RefProd INT PRIMARY KEY AUTO_INCREMENT,
-    Design VARCHAR(50) NOT NULL,
-    PrixHT DECIMAL(10,2)
+-- =============================================
+-- Database: StoreManagement
+-- =============================================
+
+CREATE DATABASE IF NOT EXISTS StoreManagement;
+USE StoreManagement;
+
+-- =============================================
+-- Table Creation
+-- =============================================
+
+CREATE TABLE Produit (
+    RefProd INT PRIMARY KEY,
+    Design VARCHAR(100) NOT NULL,
+    PrixHT DECIMAL(10,2) NOT NULL
 );
 
-CREATE TABLE Facture(
-    Numfact INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Facture (
+    Numfact INT PRIMARY KEY,
     DatFact DATE NOT NULL
 );
 
-CREATE TABLE Anc_Produit(
-    RefProd INT PRIMARY KEY AUTO_INCREMENT,
-    Design VARCHAR(50) NOT NULL,
-    PrixHT DECIMAL(10,2)
-);
-
-CREATE TABLE Client(
-    IdClient INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Client (
+    IdClient INT PRIMARY KEY,
     Nom VARCHAR(50) NOT NULL,
     Prenom VARCHAR(50) NOT NULL,
     Ville VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE Commande(
-    IdCommande INT PRIMARY KEY AUTO_INCREMENT,
-    Numfact INT NOT NULL,
-    IdClient INT NOT NULL,
+CREATE TABLE Categorie_Produit (
+    IdCateg INT PRIMARY KEY,
+    NomCateg VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Anc_Produit (
+    RefProd INT PRIMARY KEY,
+    Design VARCHAR(100) NOT NULL,
+    PrixHT DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE Commande (
+    Numfact INT,
+    IdClient INT,
+    PRIMARY KEY (Numfact, IdClient),
     FOREIGN KEY (Numfact) REFERENCES Facture(Numfact),
     FOREIGN KEY (IdClient) REFERENCES Client(IdClient)
 );
 
-CREATE TABLE Est_Facture(
-    Numfact INT NOT NULL,
-    RefProd INT NOT NULL,
-    Qte INT DEFAULT 0,
+CREATE TABLE Est_Facture (
+    Numfact INT,
+    RefProd INT,
+    Qte INT NOT NULL,
     PRIMARY KEY (Numfact, RefProd),
     FOREIGN KEY (Numfact) REFERENCES Facture(Numfact),
     FOREIGN KEY (RefProd) REFERENCES Produit(RefProd)
 );
 
-CREATE TABLE Categorie_Produit(
-    IdCateg INT PRIMARY KEY AUTO_INCREMENT,
-    NomCateg VARCHAR(100)
-);
-
-CREATE TABLE Produit_Categorie(
-    RefProd INT NOT NULL,
-    IdCateg INT NOT NULL,
+CREATE TABLE Produit_Categorie (
+    RefProd INT,
+    IdCateg INT,
     PRIMARY KEY (RefProd, IdCateg),
     FOREIGN KEY (RefProd) REFERENCES Produit(RefProd),
     FOREIGN KEY (IdCateg) REFERENCES Categorie_Produit(IdCateg)
 );
 
+-- =============================================
+-- Data Insertion
+-- =============================================
 
-INSERT INTO Produit (Design, PrixHT) VALUES
-('Livre', 120.0),
-('Stylo Bic', 10.0),
-('Cahier A4', 30.0),
-('Gomme', 5.0),
-('Sac à dos scolaire', 250.0),
-('Ordinateur Dell', 9000.0),
-('Tablette Samsung', 3200.0),
-('Casque Bluetooth', 800.0),
-('Imprimante HP', 1500.0),
-('Souris sans fil', 200.0),
-('Clavier mécanique', 400.0),
-('Tapis de souris', 80.0),
-('Chargeur USB-C', 120.0),
-('Disque Dur 1To', 600.0),
-('Clé USB 64Go', 150.0),
-('Carnet de notes', 35.0),
-('Tableau Blanc', 500.0),
-('Scanner Epson', 2500.0),
-('Clé USB 128Go', 250.0),
-('Batterie Externe 10000mAh', 350.0),
-('Enceinte Bluetooth', 1200.0),
-('Webcam HD', 800.0),
-('Rétroprojecteur', 4500.0),
-('Casque Gaming', 2200.0),
-('Paperboard', 900.0),
-('Calculatrice scientifique', 350.0),
-('Lampe LED de bureau', 150.0),
-('Sacoche pour ordinateur', 450.0),
-('Disque SSD 512Go', 1000.0),
-('Support écran ajustable', 750.0);
+INSERT INTO Produit (RefProd, Design, PrixHT) VALUES
+(1, 'Livre', 120.0),
+(2, 'Stylo Bic', 10.0),
+(3, 'Cahier A4', 30.0),
+(4, 'Gomme', 5.0),
+(5, 'Sac à dos scolaire', 250.0),
+(6, 'Ordinateur Dell', 9000.0),
+(7, 'Tablette Samsung', 3200.0),
+(8, 'Casque Bluetooth', 800.0),
+(9, 'Imprimante HP', 1500.0),
+(10, 'Souris sans fil', 200.0),
+(11, 'Clavier mécanique', 400.0),
+(12, 'Tapis de souris', 80.0),
+(13, 'Chargeur USB-C', 120.0),
+(14, 'Disque Dur 1To', 600.0),
+(15, 'Clé USB 64Go', 150.0),
+(16, 'Carnet de notes', 35.0),
+(17, 'Tableau Blanc', 500.0),
+(18, 'Scanner Epson', 2500.0),
+(20, 'Clé USB 128Go', 250.0),
+(21, 'Batterie Externe 10000mAh', 350.0),
+(22, 'Enceinte Bluetooth', 1200.0),
+(23, 'Webcam HD', 800.0),
+(24, 'Rétroprojecteur', 4500.0),
+(25, 'Casque Gaming', 2200.0),
+(26, 'Paperboard', 900.0),
+(27, 'Calculate scientifique', 350.0),
+(28, 'Lampe LED de bureau', 150.0),
+(29, 'Sacoche pour ordinateur', 450.0),
+(30, 'Disque SSD 512Go', 1000.0),
+(31, 'Support écran ajustable', 750.0);
 
+INSERT INTO Facture (Numfact, DatFact) VALUES
+(1, '2024-01-12'),
+(2, '2024-01-15'),
+(3, '2024-01-20'),
+(4, '2024-01-28'),
+(5, '2024-02-05'),
+(6, '2024-02-10'),
+(7, '2010-10-16'),
+(9, '2010-12-02'),
+(10, '2011-03-03'),
+(11, '2012-06-17'),
+(12, '2015-09-25'),
+(13, '2018-12-08'),
+(14, '2020-07-21'),
+(15, '2022-05-30'),
+(16, '2024-04-01'),
+(17, '2024-05-03'),
+(18, '2024-03-10'),
+(19, '2024-03-15');
 
-INSERT INTO Client (Nom, Prenom, Ville) VALUES
-('El Idrissi', 'Omar', 'Casablanca'),
-('Bennani', 'Fatima', 'Rabat'),
-('Tazi', 'Mohamed', 'Fès'),
-('Ouazzani', 'Sofia', 'Tanger'),
-('Jebli', 'Hassan', 'Marrakech'),
-('Ait Laheen', 'Karim', 'Agadir'),
-('Essaidi', 'Imane', 'Oujda'),
-('Hajji', 'Abdellah', 'Kenitra'),
-('El Amrani', 'Yassine', 'Meknès'),
-('Zaidi', 'Nadia', 'Essaouira');
+INSERT INTO Client (IdClient, Nom, Prenom, Ville) VALUES
+(1,'El Idrissi','Omar','Casablanca'),
+(2,'Bennani','Fatima','Rabat'),
+(3,'Tazi','Mohamed','Fès'),
+(4,'Ouazzani','Sofia','Tanger'),
+(5,'Jebli','Hassan','Marrakech'),
+(6,'Ait Laheen','Karim','Agadir'),
+(7,'Essaidi','Imane','Oujda'),
+(8,'Hajji','Abdellah','Kenitra'),
+(9,'El Amrani','Yassine','Meknès'),
+(10,'Zaidi','Nadia','Essaouira'),
+(11,'Karim','El Bachir','Fès'),
+(12,'Soukaina','Meziane','Rabat'),
+(13,'Yassir','Benali','Rabat'),
+(14,'Sarah','Touhami','Casablanca'),
+(15,'Nour','El Idrissi','Fès'),
+(16,'Walid','Moussa','Meknès'),
+(17,'Hind','Bakkali','Agadir'),
+(18,'Ali','Hammadi','Tanger'),
+(19,'Client','Supplémentaire','Rabat');
 
-INSERT INTO Facture (DatFact) VALUES
-('2024-01-12'),('2024-01-15'),('2024-01-20'),('2024-01-28'),('2024-02-05'),
-('2024-02-10'),('2024-03-05'),('2024-03-10'),('2024-03-15'),('2024-03-20');
+INSERT INTO Categorie_Produit VALUES
+(1,'Papeterie'),
+(2,'Informatique'),
+(3,'Accessoires'),
+(4,'Stockage'),
+(5,'Audio'),
+(6,'Périphérique'),
+(7,'Equipements de bureau'),
+(8,'Mobilier de Bureau');
 
-
-INSERT INTO Commande (Numfact, IdClient) VALUES
-(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),(9,9),(10,10);
-
-
-INSERT INTO Est_Facture (Numfact, RefProd, Qte) VALUES
-(1,1,2),(1,3,5),(2,2,10),(3,4,4),(4,5,1),(4,6,2),
-(5,7,3),(5,8,2),(6,9,1),(6,10,4),(7,11,5),(7,12,2),
-(8,13,1),(8,14,3),(9,15,2),(9,16,1),(10,17,5),(10,18,2);
-
-INSERT INTO Categorie_Produit (NomCateg) VALUES
-('Papeterie'),('Informatique'),('Accessoires'),('Stockage'),
-('Audio'),('Périphérique'),('Equipements de bureau'),('Mobilier de Bureau');
-
-
-INSERT INTO Produit_Categorie (RefProd, IdCateg) VALUES
+INSERT INTO Produit_Categorie VALUES
 (1,1),(2,1),(3,1),(4,1),(5,1),
-(6,2),(7,2),(8,3),(9,2),(10,2),
-(11,2),(12,3),(13,3),(14,4),(15,4),
-(16,1),(17,7),(18,2),(19,7),(20,4);
+(6,2),(7,2),(9,2),(10,2),(11,2),
+(8,3),(12,3),(13,3),(14,4),(15,4),
+(16,1),(17,7),(18,2), -- (19,7) removed
+(20,4),(21,5),(22,5),(23,6),(24,6),
+(25,5),(26,7),(27,1),(28,7),(29,3),(30,4);
+
+INSERT INTO Commande VALUES
+(1,1),(2,2),(3,3),(4,4),(5,5),
+(6,6),(7,1),      -- (8,1) removed
+(9,11),(10,11),
+(11,12),(12,12),
+(16,19),(17,2),
+(10,13),(11,13),(12,14),(13,15),
+(14,16),(15,17),
+(10,18),(11,18);
+
+INSERT INTO Facture (Numfact, DatFact) VALUES (8, '2024-01-30');
+
+INSERT INTO Est_Facture VALUES
+(1,1,2),(1,3,5),(2,2,10),(3,4,4),
+(4,5,1),(4,6,2),(5,7,3),(5,8,2),
+(6,9,1),(6,10,4),(6,11,5),(7,3,2),
+(8,4,1),(9,5,3),(10,6,4),(11,7,2),
+(12,8,1),(16,26,2),(17,27,3),(18,28,1),
+(19,29,2);
 
 
-INSERT INTO Anc_Produit (Design, PrixHT) VALUES
-('Livre', 100),('Stylo Bic', 8),('Cahier A4', 25),
-('Ordinateur Dell', 8500),('Imprimante HP', 1400),
-('Carnet de notes', 30),('Agrafeuse', 40),
-('Enceinte Bluetooth', 1000),('Rétroprojecteur', 4000),
-('Paperboard', 850),('Calculatrice scientifique', 300),
-('Lampe LED de bureau', 120),('Sacoche pour ordinateur', 400),
-('Disque SSD 512Go', 900);
 
+INSERT INTO Anc_Produit VALUES
+(1,'Livre',100),(2,'Stylo Bic',8),(3,'Cahier A4',25),
+(6,'Ordinateur Dell',8500),(9,'Imprimante HP',1400),
+(16,'Carnet de notes',30),(19,'Agrafeuse',40),
+(22,'Enceinte Bluetooth',1000),(24,'Rétroprojecteur',4000),
+(26,'Paperboard',850),(27,'Calculate scientifique',300),
+(28,'Lampe LED de bureau',120),(29,'Sacoche pour ordinateur',400),
+(30,'Disque SSD 512Go',900);
