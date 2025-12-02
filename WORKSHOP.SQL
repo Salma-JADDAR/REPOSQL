@@ -188,3 +188,8 @@ INSERT INTO Anc_Produit VALUES
 (26,'Paperboard',850),(27,'Calculate scientifique',300),
 (28,'Lampe LED de bureau',120),(29,'Sacoche pour ordinateur',400),
 (30,'Disque SSD 512Go',900);
+
+
+/***************Add a new product***********/
+INSERT INTO Produit (RefProd, Design, PrixHT) VALUES
+(19,'Agrafeuse', 50.6);
