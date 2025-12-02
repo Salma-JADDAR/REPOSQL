@@ -193,3 +193,13 @@ INSERT INTO Anc_Produit VALUES
 /***************Add a new product***********/
 INSERT INTO Produit (RefProd, Design, PrixHT) VALUES
 (19,'Agrafeuse', 50.6);
+
+/***************Register a new invoice number 8 dated 21/11/2010***********/
+DELETE FROM Est_Facture
+WHERE Numfact = 8;
+
+DELETE FROM Facture
+WHERE Numfact = 8;
+
+INSERT INTO Facture (Numfact, DatFact) VALUES
+(8 , '2010-11-21');
